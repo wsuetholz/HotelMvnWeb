@@ -17,6 +17,16 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css" href="default.css">	
+	<script language="JavaScript">
+	    <!--
+		function submitForm(){
+		    document.hotelListing.btnAddEdit.click();
+		}
+		function submitDelete(){
+		    document.hotelListing.btnDelete.click();
+		}
+	    -->
+	</script>
     </head>
     <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,14 +41,12 @@
 	      <a class="navbar-brand" href="#">Hotel Administration</a>
 	    </div>
 	    <div id="navbar" class="navbar-collapse collapse">
-	      <form class="navbar-form navbar-right">
-		<div class="form-group">
-		    <button type="submit" class="btn btn-primary" name="addEdit">Add/Edit</button>
+		<div class="form-group navbar-form navbar-right">
+		    <button type="submit" class="btn btn-primary" name="btnDeleteHdr" onclick="submitDelete();">Delete</button>
 		</div>
-		<div class="form-group">
-		    <button type="submit" class="btn btn-primary" name="delete">Delete</button>
+		<div class="form-group navbar-form navbar-right">
+		    <button type="submit" class="btn btn-primary" name="btnAddEditHdr" onclick="submitForm();">Add/Edit</button>
 		</div>
-	      </form>
 	    </div><!--/.navbar-collapse -->
 	  </div>
 	</nav>
@@ -49,9 +57,9 @@
 	</div>
 
 	<div class="container">
-	    <form method="POST" action="HotelController?action=doChanges">
-		<input type="submit" class="btn btn-primary" value="Add/Edit" name="addEdit" />&nbsp;
-		<input type="submit" class="btn btn-primary" value="Delete" name="delete" />
+	    <form name="hotelListing" method="POST" action="HotelController?action=doChanges">
+		<input type="submit" class="hidden" value="Add/Edit" name="btnAddEdit" />&nbsp;
+		<input type="submit" class="hidden" value="Delete" name="btnDelete" />
 		<br><br>
 		<table id="hotelTable" class="table table-striped">
 		    <thead>
@@ -81,9 +89,6 @@
 			</c:forEach>
 		    </tbody>
 		</table>
-		<br>
-		<input type="submit" class="btn btn-primary" value="Add/Edit" name="addEdit" />&nbsp;
-		<input type="submit" class="btn btn-primary" value="Delete" name="delete" />
 	    </form>
 	</div>
 	<!-- Latest compiled and minified JavaScript -->

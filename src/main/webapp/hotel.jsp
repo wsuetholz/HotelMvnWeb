@@ -29,16 +29,6 @@
 	      </button>
 	      <a class="navbar-brand" href="#">Hotel Administration</a>
 	    </div>
-	    <div id="navbar" class="navbar-collapse collapse">
-	      <form class="navbar-form navbar-right">
-		<div class="form-group">
-		    <button type="submit" name="addEdit">Add/Edit</button>
-		</div>
-		<div class="form-group">
-		    <button type="submit" name="delete">Delete</button>
-		</div>
-	      </form>
-	    </div><!--/.navbar-collapse -->
 	  </div>
 	</nav>
 
@@ -50,9 +40,7 @@
 	<div class="container">
 	    <form method="POST" class="form-horizontal" action="HotelController?action=store">
 		<div class="form-group">
-		    <label for="inputId" class="control-label col-xs-2">ID</label>
 		    <div class="col-xs-10">
-			<p class="form-control-static">0</p>
 			<input type="hidden" class="form-control" id="inputId" name="inputId" value="${hotel.hotelId}">
 		    </div>
 	       </div>
@@ -94,8 +82,8 @@
 		</div>
 		<div class="form-group">
 		    <div class="col-xs-offset-2 col-xs-10">
-			<button type="submit" class="btn btn-primary" name="save">Save</button>
-			<button type="submit" class="btn btn-primary" name="cancel">Cancel</button>
+			<button type="submit" class="btn btn-primary" name="btnSave">Save</button>
+			<button type="submit" class="btn btn-primary" name="btnCancel">Cancel</button>
 		    </div>
 		</div>
 	    </form>

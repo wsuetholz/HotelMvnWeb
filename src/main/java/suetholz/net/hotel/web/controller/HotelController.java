@@ -37,10 +37,10 @@ public class HotelController extends HttpServlet {
     private static final String DOCHANGES_ACTION = "doChanges";
     private static final String STORE_ACTION = "store";
    
-    private static final String ADD_EDIT_BUTTON = "addEdit";
-    private static final String DELETE_BUTTON = "delete";
-    private static final String CANCEL_BUTTON = "cancel";
-    private static final String SAVE_BUTTON = "save";
+    private static final String ADD_EDIT_BUTTON = "btnAddEdit";
+    private static final String DELETE_BUTTON = "btnDelete";
+    private static final String CANCEL_BUTTON = "btnCancel";
+    private static final String SAVE_BUTTON = "btnSave";
     
     // Error messages...
     private static final String ACTION_UNKNOWN_MSG =

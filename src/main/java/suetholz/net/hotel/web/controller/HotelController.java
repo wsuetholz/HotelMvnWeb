@@ -6,14 +6,14 @@
 package suetholz.net.hotel.web.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import suetholz.net.hotel.web.model.dbservice.HotelService;
 import suetholz.net.hotel.web.model.entities.Hotel;
 
@@ -46,6 +46,7 @@ public class HotelController extends HttpServlet {
     private static final String ACTION_UNKNOWN_MSG =
         "Sorry, unable to complete this request because the action is unknown.";
    
+    private static final String HOTEL_LIST_KEY = "hotelIdsList";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,6 +63,7 @@ public class HotelController extends HttpServlet {
 	
 	response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter(ACTION_KEY);
+        HttpSession session = request.getSession();
 
 	HotelService hotelService = new HotelService();
 	
@@ -87,6 +89,16 @@ public class HotelController extends HttpServlet {
                         // get the first item only for update
                         Hotel hotel = hotelService.getHotelById(ids[0]);
                         request.setAttribute("hotel", hotel);
+			if (ids.length > 1) {
+			    List<String> idList = new ArrayList<>();
+			    for (String id: ids) {
+				idList.add(id);
+			    }
+			    idList.remove(0);
+			    session.setAttribute(HOTEL_LIST_KEY, idList);
+			} else {
+			    session.removeAttribute(HOTEL_LIST_KEY);
+			}
                     }
                     destination = HOTEL_UPDATE_PAGE;
                 } else if (delete != null) {
@@ -123,18 +135,26 @@ public class HotelController extends HttpServlet {
 			Hotel hotel =
 				new Hotel(objId,hotelName, street, city, state, postalCode, notes);
 			hotelService.updateHotel(hotel);
-			
 		    }
-                    List<Hotel> hotels = hotelService.getAllHotels();
-                    request.setAttribute("hotels", hotels);
-                    destination = HOTEL_LIST_PAGE;		
+		}
 
-                } else {
-                    // must have clicked the Cancel button
-                    List<Hotel> hotels = hotelService.getAllHotels();
-                    request.setAttribute("hotels", hotels);
-                    destination = HOTEL_LIST_PAGE;		
-                }
+		List<String>idList = (List<String>)session.getAttribute(HOTEL_LIST_KEY);
+		if (idList != null && idList.size() > 0) {
+		    String hotelId = idList.get(0);
+		    idList.remove(0);
+		    Hotel hotel = hotelService.getHotelById(hotelId);
+		    request.setAttribute("hotel", hotel);
+		    if (idList.size() > 0) {
+			session.setAttribute(HOTEL_LIST_KEY, idList);
+		    } else {
+			session.removeAttribute(HOTEL_LIST_KEY);
+		    }
+		    destination = HOTEL_UPDATE_PAGE;
+		} else {
+		    List<Hotel> hotels = hotelService.getAllHotels();
+		    request.setAttribute("hotels", hotels);
+		    destination = HOTEL_LIST_PAGE;		
+		}
 
             // If we get to here, no known action was retrieved from
             // the FrontController.
@@ -149,7 +169,7 @@ public class HotelController extends HttpServlet {
 
         // Redirect to sub-controller
         RequestDispatcher dispatcher =
-                getServletContext().getRequestDispatcher(destination);
+                getServletContext().getRequestDispatcher(response.encodeURL(destination));
         dispatcher.forward(request, response);	
     }
 

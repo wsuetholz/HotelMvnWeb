@@ -24,6 +24,9 @@
 	<link rel="stylesheet" type="text/css" href="default.css">	
     </head>
     <body>
+	<c:redirect url="HotelController?action=findAll" />
+	
+	<!-- In Case the Redirect doesn't work -->
 	<h1>Hotel List</h1>
 	<ul>
 	    <li>

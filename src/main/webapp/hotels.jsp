@@ -29,6 +29,9 @@
 	</script>
     </head>
     <body>
+	<c:if test="${fn:length(hotels) == 0}">
+	    <% response.sendRedirect(response.encodeRedirectURL("HotelController?action=findAll")); %>
+	</c:if>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container">
 	    <div class="navbar-header">
@@ -38,7 +41,7 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="#">Hotel Administration</a>
+	      <a class="navbar-brand" href="HotelController?action=findAll">Hotel Administration</a>
 	    </div>
 	    <div id="navbar" class="navbar-collapse collapse">
 		<div class="form-group navbar-form navbar-right">

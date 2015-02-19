@@ -7,7 +7,7 @@ package suetholz.net.hotel.web.model.dbservice;
 
 import java.util.List;
 import suetholz.net.hotel.web.model.dao.HotelDAO;
-import suetholz.net.hotel.web.model.dao.IHotelDAO;
+import suetholz.net.hotel.web.model.dao.MySqlHotelDAO;
 import suetholz.net.hotel.web.model.entities.Hotel;
 
 /**
@@ -15,10 +15,10 @@ import suetholz.net.hotel.web.model.entities.Hotel;
  * @author wsuetholz
  */
 public class HotelService {
-    IHotelDAO hotelDao;
+    HotelDAO hotelDao;
     
-    public HotelService () {
-	hotelDao = new HotelDAO();
+    public HotelService (HotelDAO hotelDao) {
+	this.hotelDao = hotelDao;
     }
     
     public List<Hotel> getAllHotels() throws Exception {
@@ -62,7 +62,8 @@ public class HotelService {
     }
     
     public static void main(String[] args) throws Exception {
-	HotelService hotelService = new HotelService();
+	HotelDAO hotelDao = new MySqlHotelDAO();
+	HotelService hotelService = new HotelService(hotelDao);
 	long retVal = 0;
 	
 	List<Hotel> hotels = hotelService.getAllHotels();

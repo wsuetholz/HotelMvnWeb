@@ -12,6 +12,29 @@
         <servlet-name>HotelController</servlet-name>
         <url-pattern>/HotelController</url-pattern>
     </servlet-mapping>
+    
+    <listener>
+	<listener-class>
+	    suetholz.net.hotel.web.event.HotelHttpSessionListener
+	</listener-class>
+    </listener>
+    
+    <listener>
+	<listener-class>
+	    suetholz.net.hotel.web.event.HotelServletContextListener
+	</listener-class>
+    </listener>
+    
+    <context-param>
+	<param-name>ManagementName</param-name>
+	<param-value>Hotel Management Company</param-value>
+    </context-param>
+    
+    <context-param>
+	<param-name>HotelDao</param-name>
+	<param-value>suetholz.net.hotel.web.model.dao.MySqlHotelDAO</param-value>
+    </context-param>    
+    
     <session-config>
         <session-timeout>
             30

@@ -9,11 +9,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import suetholz.net.hotel.web.model.dao.HotelDAO;
 import suetholz.net.hotel.web.model.dbservice.HotelService;
 import suetholz.net.hotel.web.model.entities.Hotel;
 
@@ -65,7 +67,24 @@ public class HotelController extends HttpServlet {
         String action = request.getParameter(ACTION_KEY);
         HttpSession session = request.getSession();
 
-	HotelService hotelService = new HotelService();
+	ServletContext ctx = request.getServletContext();
+	
+	// Setting up for dependency injection from context configuration
+	HotelDAO hotelDao;
+	
+	try {
+	    String className = ctx.getInitParameter("HotelDao");
+	    Class clazz = Class.forName(className);
+	    hotelDao = (HotelDAO)clazz.newInstance();
+	} catch (ClassNotFoundException cex) {
+	    throw new ServletException(cex);
+	} catch (InstantiationException iex) {
+	    throw new ServletException(iex);
+	} catch (IllegalAccessException ilex) {
+	    throw new ServletException(ilex);	    
+	}
+	
+	HotelService hotelService = new HotelService(hotelDao);
 	
 	try {
             if(FIND_ALL_ACTION.equals(action)) {

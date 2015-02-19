@@ -41,7 +41,7 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="HotelController?action=findAll">Hotel Administration</a>
+	      <a class="navbar-brand" href="HotelController?action=findAll">${applicationScope['ManagementName']}</a>
 	    </div>
 	    <div id="navbar" class="navbar-collapse collapse">
 		<div class="form-group navbar-form navbar-right">
